@@ -19,49 +19,49 @@ execute "/tmp/BOA.sh" do
   creates "/usr/local/bin/boa"
 end
 
-execute "Run the BOA Installer iaminaweoctopus" do
-  command "boa in-head local gregg@iaminawe.com mini iaminaweoctopus"
+execute "Run the BOA Installer o1" do
+  command "boa in-head local gandhiano@ecobytes.net mini o1"
 end
 
-  user "iaminaweoctopus" do
+  user "o1" do
     supports :manage_home => true
-    home "/data/disk/iaminaweoctopus"
+    home "/data/disk/o1"
     shell "/bin/bash"
   end
 
-  directory "/data/disk/iaminaweoctopus/.ssh" do
-    owner "iaminaweoctopus"
+  directory "/data/disk/o1/.ssh" do
+    owner "o1"
     group "users"
     mode 00700
     recursive true
   end
 
   execute "Add ssh key to user" do
-    command "ssh-keygen -b 4096 -t rsa -N \"\" -f /data/disk/iaminaweoctopus/.ssh/id_rsa"
-    creates "/data/disk/iaminaweoctopus/.ssh/id_rsa"
+    command "ssh-keygen -b 4096 -t rsa -N \"\" -f /data/disk/o1/.ssh/id_rsa"
+    creates "/data/disk/o1/.ssh/id_rsa"
   end
 
-  file "/data/disk/iaminaweoctopus/.ssh/id_rsa" do
-    owner "iaminaweoctopus"
+  file "/data/disk/o1/.ssh/id_rsa" do
+    owner "o1"
     group "users"
     mode 00600
   end
   
-  file "/data/disk/iaminaweoctopus/.ssh/id_rsa.pub" do
-    owner "iaminaweoctopus"
+  file "/data/disk/o1/.ssh/id_rsa.pub" do
+    owner "o1"
     group "users"
     mode 00600
   end  
 
  # Only necessary as long as there is a need for it
-remote_file "/tmp/fix-remote-import-hostmaster-iaminaweoctopus.patch" do
-  source "https://raw.github.com/iaminawe/boa-vagrant/master/patches/fix-remote-import-hostmaster-iaminaweoctopus.patch"
+remote_file "/tmp/fix-remote-import-hostmaster-o1.patch" do
+  source "https://raw.github.com/gandhiano/boa-vagrant/master/patches/fix-remote-import-hostmaster-o1.patch"
   mode 00755
 end
 
 execute "Apply Remote Import hostmaster patch" do
-  cwd "/data/disk/iaminaweoctopus/.drush/provision/remote_import"
-  command "patch -p1 < /tmp/fix-remote-import-hostmaster-iaminaweoctopus.patch"
+  cwd "/data/disk/o1/.drush/provision/remote_import"
+  command "patch -p1 < /tmp/fix-remote-import-hostmaster-o1.patch"
 end
 
 # Rebuild VirtualBox Guest Additions
